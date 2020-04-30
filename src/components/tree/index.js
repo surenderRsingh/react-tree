@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import _ from "lodash";
 import TreeNode from "./TreeNode";
 
+
 class Tree extends Component {
   constructor(props) {
     super(props);
     const data = _.cloneDeep(props.data);
-    this.state = { data: data };
+    this.state = { data: data,selectedNode : null };
   }
+
+
 
   getChangedObject = (parent, id) => {
     if (parent.id === id) {
@@ -39,6 +42,10 @@ class Tree extends Component {
     });
   };
 
+  onNodeSelection = node => {
+    this.setState({selectedNode:node});
+    this.props.onNodeSelection(node);
+  }
   render() {
     return (
       <TreeNode
@@ -46,9 +53,10 @@ class Tree extends Component {
         level={0}
         type="folder"
         onToggle={this.onToggle}
-        folderPropName = {this.props.folderPropName}
-        filePropName = {this.props.filePropName}
-        onNodeSelection = {this.props.onNodeSelection}
+        folderPropName={this.props.folderPropName}
+        filePropName={this.props.filePropName}
+        onNodeSelection={this.onNodeSelection}
+        selectedNode={this.state.selectedNode}
       />
     );
   }

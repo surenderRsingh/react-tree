@@ -4,19 +4,32 @@ import ExpandCollapseIcon from "./ExpandCollapseIcon";
 import FileFolderIcon from "./FileFolderIcon";
 
 const NodeElement = (props) => {
-  const { node, type, level } = props;
+  const { node, type, level, selectedNode, folderPropName } = props;
   const isOpen = node.isOpen ? node.isOpen : false;
   return (
-    <StyledTreeNode level={level} type={type}>
+    <StyledTreeNode
+      level={level}
+      type={type}
+      isSelected={isNodeSelected(node, selectedNode, folderPropName)}
+      onClick={() => props.onNodeSelection(node)}
+    >
       <ExpandCollapseIcon {...props} />
       <FileFolderIcon type={type} isOpen={isOpen} />
-      <div className='node-text' onClick = {() => props.onNodeSelection(node)}  >{node.name}</div>
+      <div className="node-text">{node.name}</div>
     </StyledTreeNode>
   );
 };
 
-const calculatePaddingLeft = (level) =>
-  level * 20 ;;
+function isNodeSelected(currentNode, selectedNode, folderPropName) {
+  return (
+    selectedNode &&
+    currentNode.id === selectedNode.id &&
+    currentNode.hasOwnProperty(folderPropName) ===
+      selectedNode.hasOwnProperty(folderPropName)
+  );
+}
+
+const calculatePaddingLeft = (level) => level * 20;
 
 const StyledTreeNode = styled.div`
   display: flex;
@@ -24,12 +37,14 @@ const StyledTreeNode = styled.div`
   align-items: center;
   padding: 5px 8px;
   padding-left: ${(props) => calculatePaddingLeft(props.level)}px;
+  background-color: ${(props) => (props.isSelected ? "LightSkyBlue" : "white")};
+
   &:hover {
-    background-color: lightgray;
+    background-color: ${(props) => (props.isSelected ? null : "lightgray")};
   }
 
   .node-text {
-    flex-grow:1;
+    flex-grow: 1;
   }
 `;
 

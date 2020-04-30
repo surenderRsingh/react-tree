@@ -9,10 +9,11 @@ const renderNode = (
   level,
   folderPropName,
   filePropName,
-  onNodeSelection
+  onNodeSelection,
+  selectedNode
 ) => (
   <TreeNode
-    key={node.id}
+    key={type+node.id}
     node={node}
     type={type}
     level={level}
@@ -20,6 +21,7 @@ const renderNode = (
     folderPropName={folderPropName}
     filePropName={filePropName}
     onNodeSelection={onNodeSelection}
+    selectedNode = {selectedNode}
   />
 );
 
@@ -29,7 +31,8 @@ const renderChildElements = (
   filePropName,
   level,
   onToggle,
-  onNodeSelection
+  onNodeSelection,
+  selectedNode
 ) => {
   const isOpen = node.isOpen ? node.isOpen : false;
   level = level + 1;
@@ -43,7 +46,8 @@ const renderChildElements = (
         level,
         folderPropName,
         filePropName,
-        onNodeSelection
+        onNodeSelection,
+        selectedNode
       );
     });
     const fileElements = node[filePropName].map((node) => {
@@ -54,7 +58,8 @@ const renderChildElements = (
         level,
         folderPropName,
         filePropName,
-        onNodeSelection
+        onNodeSelection,
+        selectedNode
       );
     });
     return _.concat(folderElements, fileElements);
@@ -71,6 +76,7 @@ const TreeNode = (props) => {
     filePropName,
     level = 0,
     onNodeSelection,
+    selectedNode
   } = props;
   return (
     <div>
@@ -81,7 +87,8 @@ const TreeNode = (props) => {
         filePropName,
         level,
         onToggle,
-        onNodeSelection
+        onNodeSelection,
+        selectedNode
       )}
     </div>
   );

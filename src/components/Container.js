@@ -1,5 +1,4 @@
 import React from 'react';
-import {TreeNode} from './TreeNode';
 import Tree from './tree';
 
 const data = {
@@ -15,13 +14,13 @@ const data = {
           name: "web",
           childNodes: [],
           childComponentsDetails: [{
-              id:101,
+              id:1,
               name:"component31"
           }],
         },
       ],
       childComponentsDetails: [{
-        id:102,
+        id:2,
         name:"component21"
       }],
     },
